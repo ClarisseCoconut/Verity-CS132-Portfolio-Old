@@ -63,7 +63,7 @@
                         <p>Before getting started we first import necessary modules for processing the data as well as visualizing it as different graphs.</p>
                         
                         <pre>
-                            <code class = "language-python line-numbers">
+                            <code class = "language-python">
                                 import pandas as pd
                                 import matplotlib.pyplot as plt
                                 import seaborn as sns
@@ -73,7 +73,7 @@
                         <p>We first view the data and some of its features such as what columns have null values.</p>
 
                         <pre>
-                            <code class = "language-python line-numbers">
+                            <code class = "language-python">
                                 df = pd.read_csv("Dataset - Group 50 - Data.csv")
                                 df = df.iloc[:105]
 
@@ -92,7 +92,7 @@
                         <p>Note as well that a similar step was done for the <b>Rating</b> column wherein the imputated value is the categorical data "False".</p>
 
                         <pre>
-                            <code class = "language-python line-numbers">
+                            <code class = "language-python">
                                 df = pd.read_csv("Dataset - Group 50 - Data.csv")
                                 df = df.iloc[:105]
                                 df.drop(['Add columns here', 'Add columns here.1', 'Add columns here.2', 'Reviewer', 'Review'], axis = 1, inplace = True)
@@ -115,7 +115,7 @@
                             <p>To do this the team just converted the values of columns <b><i>Date posted</i></b> and <b><i>Timestamp</i></b> into the datetime datatype. The team also used the <b><i>.replace</i></b> method to modify some entries in the <b><i>Rating</i></b> and <b><i>Followers</i></b> column to ensure formatting consistency. Note that these errors in the formatting were found as the team were exploring the data.</p>
 
                             <pre>
-                                <code class="language-python line-numbers">
+                                <code class="language-python">
                                     df['Date posted'] = pd.to_datetime(df['Date posted'])
                                     df['Timestamp'] = pd.to_datetime(df['Timestamp'])
                                     df['Rating'] = df['Rating'].replace('FALSE. MISLEADING', 'FALSE, MISLEADING')
@@ -136,7 +136,7 @@
                             <p>Shown below is the process in doing this process. Notice that the team used one hot encoding for both the two categorical data <b>Rating</b> and <b>Content type</b> since the values of this data column doesn't have and inherent ordering in their values. For the content type, the data had at most 1 type of content type while in the rating there were some data that had 2 or more ratings.</p>
 
                             <pre>
-                                <code class = "language-python line-numbers">
+                                <code class = "language-python">
                                     from sklearn.preprocessing import MultiLabelBinarizer
                                     df_categorical = df[['ID', 'Content type', 'Rating']].copy()
                                     one_hot = pd.get_dummies(df_categorical['Content type'], prefix = 'Content type')
@@ -167,7 +167,7 @@
                             <p>The code below shows the code for doing this process. Note also that we need a working internet for us to download the databases.</p>
                             
                             <pre>
-                                <code class="language-python line-numbers">
+                                <code class="language-python">
                                     import re
                                     import copy
                                     import string
@@ -188,7 +188,7 @@
                             <p>The code below shows how this process is done. The output is also shown below.</p> 
 
                             <pre>
-                                <code class="language-python line-numbers">
+                                <code class="language-python">
                                     #handling emojis
                                     url_emoji = "https://drive.google.com/uc?id=1G1vIkkbqPBYPKHcQ8qy0G2zkoab2Qv4v"
                                     df_emoji = pd.read_pickle(url_emoji)
