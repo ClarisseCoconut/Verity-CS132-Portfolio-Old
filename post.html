@@ -108,6 +108,27 @@
                         <p> Notice in the results above that when we print out the sum of null values found in the dataset, we get 0 for all the columns. This means that we have dealt with all the null values found in our data set.</p>
                         </div>
 
+                        <!--Ensuring formatting Consistency-->
+                        <div>
+                            <h3><b> Ensuring formatting consistency</b></h3>
+                            <p> It's also very important to ensure that formatting consistency is attained. This is important because having an inconsistent format may cause the exploration of the data to have an error or display wrong results. Since the research team ensured that the correct data was inputted in the dataset, the team only ensured that the data type is consistent with its type of data such as the case with the <b><i>Date Posted</i></b> and <b><i>Timestamp</i></b> columns since their values is of timestamp and not strings. Having a wrong datatype may cause the values to be changed accidentally or unwillingly so having a correct datatype is also important in having formatting consistency </p>
+                            <p>To do this the team just converted the values of columns <b><i>Date posted</i></b> and <b><i>Timestamp</i></b> into the datetime datatype. The team also used the <b><i>.replace</i></b> method to modify some entries in the <b><i>Rating</i></b> and <b><i>Followers</i></b> column to ensure formatting consistency. Note that these errors in the formatting were found as the team were exploring the data.</p>
+
+                            <pre>
+                                <code class="language-python line-numbers">
+                                    df['Date posted'] = pd.to_datetime(df['Date posted'])
+                                    df['Timestamp'] = pd.to_datetime(df['Timestamp'])
+                                    df['Rating'] = df['Rating'].replace('FALSE. MISLEADING', 'FALSE, MISLEADING')
+                                    df['Followers'] = df['Followers'].replace('28.3K', '28,300')
+                                    df['Followers'] = df['Followers'].replace('20.4K', '20,300')
+
+                                    print(df['Date posted'].dtype)
+                                    print(df['Date posted'].head(5))
+                                </code>
+                            </pre>
+                            <p>The results above shows the first 5 data of the Date posted column as well as its datatype. </p>
+                        </div>
+
                         <!--Categorical Encoding-->
                         <div>
                             <h3><b> Categorical Encoding </b></h3>
@@ -121,9 +142,6 @@
                                     one_hot = pd.get_dummies(df_categorical['Content type'], prefix = 'Content type')
                                     df_categorical = df_categorical.join(one_hot)
 
-
-
-                                    df_categorical['Rating'] = df_categorical['Rating'].replace('FALSE. MISLEADING', 'FALSE, MISLEADING')
                                     df_categorical['Rating'] = df_categorical['Rating'].str.split(", ")
                                     one_hot = MultiLabelBinarizer()
                                     one_hot = one_hot.fit_transform(df_categorical['Rating'])
@@ -140,23 +158,6 @@
                             <p>Shown above is the output for this section. Notice that the values we're changed to 0 and 1 since one hot encoding was used.</p>
                         </div>
 
-                        <!--Ensuring formatting Consistency-->
-                        <div>
-                            <h3><b> Ensuring formatting consistency (Timestamp and Date Posted) </b></h3>
-                            <p> It's also very important to ensure that formatting consistency is attained. This is important because having an inconsistent format may cause the exploratin of the data to have an error or display wrong results. Since the research team ensured that the correct data was inputted in the dataset, the team only ensured that the data type is consistent with its type of data such as the case with the <b><i>Date Posted</i></b> and <b><i>Timestamp</i></b> columns since their values is of timestamp and not strings. Having a wrong datatype may cause the values to be changed accidentally or unwillingly so having a correct datatype is also important in having formatting consistency </p>
-                            <h5>To do this the team just converted its values into the datetime datatype.</h5>
-
-                            <pre>
-                                <code class="language-python line-numbers">
-                                    df['Date posted'] = pd.to_datetime(df['Date posted'])
-                                    df['Timestamp'] = pd.to_datetime(df['Timestamp'])
-
-                                    print(df['Date posted'].dtype)
-                                    print(df['Date posted'].head(5))
-                                </code>
-                            </pre>
-                            <p>The results above shows the first 5 data of the Date posted column as well as its datatype. </p>
-                        </div>
 
                         <!--NLP-->
                         <div>
