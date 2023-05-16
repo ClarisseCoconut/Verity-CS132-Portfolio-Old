@@ -179,6 +179,8 @@
                             </pre>
                         </div>
 
+                        <br>
+
                         <!--Removal of emoji and emoticon-->
                         <div>
                             <h4><b> Removal of emoji and emoticon </b></h4>
@@ -219,6 +221,157 @@
                                 </code>
                             </pre>
                         </div>
+
+                        <br>
+
+                        <!--Translating and Lowercasing-->
+                        <div>
+                            <h4><b>Translating and Lowercasing</b></h4>
+                            <p>In this section of NLP, since we finished converting all the non-characters into workable texts we focus in making the format the same. As mentioned earlier, 'Risa' and 'risa' should be the same so as to make things easier we convert all the characters into a lowercase format. We also know that there are multilingual data from this column so before converting all of these into a lowercase format, we first translate all of it into english and only then that we converted all of the characters into lowercase.</p>
+                            <p>The code below shows this process. Note that we imported a translator so that we can convert the multilingual text into the same language but do note that this is not 100% accurate since there are sometimes contexts in language. The team decided to translate the languages into english since most of the tweets are in english format and filipino format.</p>
+                            <p>The output for the first 5 database is also shown below.</p>
+
+                            <pre>
+                                <code class="language-python">
+                                    from googletrans import Translator
+                                    #translating
+                                    translator = Translator()
+                                    tweets_eng = [t.text for t in translator.translate(tweets, src='tl', dest='en')]
+                                    df_tweet['English'] = tweets_eng
+
+                                    #lowercasing
+                                    lowercase = [t.lower() for t in tweets_eng]
+                                    lowercase = [t.translate(str.maketrans('', '', string.punctuation)) for t in lowercase]
+
+                                    df_tweet['Cleaned'] = lowercase
+
+                                    # print(df_tweet.head(5))
+                                </code>
+                            </pre>
+                        </div>
+
+                        <br>
+
+                        <!--Tokenization and Stop words removal-->
+                        <div>
+                            <h4><b> Tokenization and Stop words removal </b></h4>
+                            <p>In this section we remove the commonly used words without any real meaning like 'as', 'like', and 'and' which we call stop words. We also tokenize in this section. Tokenizing means that we get the words either by phrase, by sentence, or by word which is important because this can be used in data modeling such as the use of machine learning. Again, though this data column is not of utmost importance in our key question this may serve useful in future processes like data modeling.</p>
+                            <p>To do this, we import the commonly used stopwords and we separate the data into two which are filtered tweets and tokenized tweets. Note that we only did this for the <b><i>Tweets</i></b> data column</p>
+                            
+                            <pre>
+                                <code class="language-python">
+                                    from nltk.corpus import stopwords
+                                    from nltk.tokenize import word_tokenize
+
+                                    tweets_filtered = []
+                                    tweets_tokens = []
+                                    for tweet in df_tweet['Cleaned']:
+                                    tweet_list = tweet.split()
+                                    filtered_words = [word for word in tweet_list if word.lower() not in stopwords.words('english')] 
+                                    filtered_sentence = ' '.join(filtered_words)
+                                    tweets_filtered.append(filtered_sentence)
+                                    token = word_tokenize(filtered_sentence)
+                                    tweets_tokens.append(token)
+
+                                    df_tweet['Filtered'] = tweets_filtered
+                                    df_tweet['Tokenized'] = tweets_tokens
+
+                                    # print(df_tweet.head(5))
+                                </code>
+                            </pre>
+                            <p>Shown above are the first 5 rows of the database.</p>
+                        </div>
+
+
+                        <!--Stemming and Lemmatization-->
+                        <div>
+                            <p>Stemming and Lemmatization are both text normalization techniques used in preparing words for processings. Stemming refers to chopping the ends of words and removing derivational affixes. Stemming is usually used in producing variants of the word base which helpfully helps in returning the same value. For example, cleaning should also return the value for clean, cleaned, and cleans. Lemmatization on the other hand refers to the vocabulary instead of just using word reduction to analyze the word's meaning.  </p>
+                            <p>To do this, we first import the stemmer and lemmatizer we are going to use which in this case is the <b>'Porter Stemmer'</b> and <b>'Wordnet Lemmatizer'.</b> We then create two arrays for both the stemmed tweets and the lemmatized tweets. Afterwards, we do the process of stemming and lemmatizing and append these to the array we initialized. We then create another column for these lemmatized and stemmed tweets.</p>
+                            
+                            <pre>
+                                <code class="language-python">
+                                    from nltk.stem import PorterStemmer, WordNetLemmatizer
+
+                                    # Initialize the stemmer and lemmatizer
+                                    stemmer = PorterStemmer()
+                                    lemmatizer = WordNetLemmatizer()
+
+                                    tweets_stem, tweets_lem = [], []
+
+                                    def stem_lem(text):
+                                    words = text.split()
+
+                                    # Stem each word
+                                    stemmed_words = [stemmer.stem(word) for word in words]
+                                    
+                                    # Lemmatize each word
+                                    lemmatized_words = [lemmatizer.lemmatize(word) for word in words]
+                                    
+                                    # Return the stemmed and lemmatized words as a tuple
+                                    tweets_stem.append(stemmed_words)
+                                    tweets_lem.append(lemmatized_words)
+
+                                    return (stemmed_words, lemmatized_words)
+
+
+                                    # Process each text in the array
+                                    processed_texts = [stem_lem(t) for t in tweets_filtered]
+                                    df_tweet['Stemmed'] = tweets_stem
+                                    df_tweet['Lemmatized'] = tweets_lem
+
+                                    # print(df_tweet.head(5))
+                                </code>
+                            </pre>
+                            <p>Shown above are the first 5 rows of the database showing these changes</p>
+                        </div>
+
+                        <!--Time Series Analysis-->
+                        <div>
+                            <h3><b>Interpolation</b></h3>
+                            <p>temporary explanation</p>
+
+                            <pre>
+                                <code class="language-python">
+                                    from calendar import month_name as mn
+                                    import matplotlib.dates as mdates
+                                    import numpy as np
+
+                                    grouped_df = df.groupby('Date posted').size().reset_index(name='count')
+                                    grouped_df.set_index(['Date posted'], inplace = True)
+                                    count_monthly = grouped_df[['count']].resample('M').sum()
+
+
+                                    count_monthly['count'] = count_monthly['count'].replace(0, np.NaN)
+                                    #nearest interpolation
+                                    count_monthly['count_nearest'] = count_monthly['count'].interpolate(method='nearest')
+                                    #linear interpolation
+                                    count_monthly['count_linear'] = count_monthly['count'].interpolate(method='linear')
+                                    #weighted time interpolation
+                                    count_monthly['count_time'] = count_monthly['count'].interpolate(method='time')
+                                    #fill missing dates using average tweets per month
+                                    count_monthly['count_average'] = count_monthly['count'].replace(np.NaN, count_monthly['count'].mean())
+                                    count_monthly['count'] = count_monthly['count'].replace(np.NaN, 0)
+                                    print(count_monthly.head(5))
+                                </code>
+                            </pre>
+                        </div>
+                        <br>
+
+
+                        <!--Data Visualization and Plotting-->
+                        <div>
+                            <h2><b>Data Visualization and Plotting</b></h2>
+                            <p>The next step after preprocessing all the data is to visualize its contents using charts, plots, and other visualizing techniques to present the complex data and represent its relationship, trends, and pattern.</p>
+                            <p>Some of the visualization techniques we used are scatterplots to show the distribution, heatmaps to show corelations, bar graphs to show comparison, and line graphs for comparison.</p>
+                        </div>
+
+                        <!--Plotting-->
+                        <div>
+                            <h3><b> Plotting </b></h3>
+                            
+                        </div>
+
+
 
                         
 
