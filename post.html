@@ -82,6 +82,8 @@
                             </code>
                         </pre>
 
+                        <!--Missing Values-->
+                        <div>
                         <h3><b> Handling missing values / ensuring no missing values </b></h3>
                         <p> In this section, we first try to find all the null values then deal with them using different methods such as dropping the whole column, imputing the general data, deleting the whole row. </p>
                         <p>Shown below is the several methods used in dealing with these values. As shown in the last code block, data columns that contained null values are the optional <b>Add columns, Reviewer, Review, Account Bio, Tweet translated, Views, Remarks, Location, and Reasoning</b>. For several columns that are optional and had many null values, the team decided to drop these columns by using the drop function. </p>
@@ -102,6 +104,121 @@
                                 print(df.isnull().sum())
                             </code>
                         </pre>
+
+                        <p> Notice in the results above that when we print out the sum of null values found in the dataset, we get 0 for all the columns. This means that we have dealt with all the null values found in our data set.</p>
+                        </div>
+
+                        <!--Categorical Encoding-->
+                        <div>
+                            <h3><b> Categorical Encoding </b></h3>
+                            <p>In this section we do categorical encoding where we convert the categorical values into an integer format so that when we feed this data to the machine learning model we're able to give better results and predictions. There are commonly two commonly used categorical encoding methods called the one hot encoding and the integer encoding. One hot encoding is usually done in categorical values without inherent value such as being high or being low while integer encoding is done for categorical values with order such as high, medium, and low.</p>
+                            <p>Shown below is the process in doing this process. Notice that the team used one hot encoding for both the two categorical data <b>Rating</b> and <b>Content type</b> since the values of this data column doesn't have and inherent ordering in their values. For the content type, the data had at most 1 type of content type while in the rating there were some data that had 2 or more ratings.</p>
+
+                            <pre>
+                                <code class = "language-python line-numbers">
+                                    from sklearn.preprocessing import MultiLabelBinarizer
+                                    df_categorical = df[['ID', 'Content type', 'Rating']].copy()
+                                    one_hot = pd.get_dummies(df_categorical['Content type'], prefix = 'Content type')
+                                    df_categorical = df_categorical.join(one_hot)
+
+
+
+                                    df_categorical['Rating'] = df_categorical['Rating'].replace('FALSE. MISLEADING', 'FALSE, MISLEADING')
+                                    df_categorical['Rating'] = df_categorical['Rating'].str.split(", ")
+                                    one_hot = MultiLabelBinarizer()
+                                    one_hot = one_hot.fit_transform(df_categorical['Rating'])
+
+                                    df_new = pd.concat([df_categorical, pd.DataFrame(one_hot)], axis = 1)
+                                    df_new.columns = ['ID', 'Content type', 'Rating', 'Content type_Emotional', 'Content type_Rational', 'Rating_FAKE',
+                                    'Rating_FALSE', 'Rating_MISLEADING', 'Rating_UNPROVEN']
+
+                                    print(df_new.head())
+
+                                </code>
+                            </pre>
+
+                            <p>Shown above is the output for this section. Notice that the values we're changed to 0 and 1 since one hot encoding was used.</p>
+                        </div>
+
+                        <!--Ensuring formatting Consistency-->
+                        <div>
+                            <h3><b> Ensuring formatting consistency (Timestamp and Date Posted) </b></h3>
+                            <p> It's also very important to ensure that formatting consistency is attained. This is important because having an inconsistent format may cause the exploratin of the data to have an error or display wrong results. Since the research team ensured that the correct data was inputted in the dataset, the team only ensured that the data type is consistent with its type of data such as the case with the <b><i>Date Posted</i></b> and <b><i>Timestamp</i></b> columns since their values is of timestamp and not strings. Having a wrong datatype may cause the values to be changed accidentally or unwillingly so having a correct datatype is also important in having formatting consistency </p>
+                            <h5>To do this the team just converted its values into the datetime datatype.</h5>
+
+                            <pre>
+                                <code class="language-python line-numbers">
+                                    df['Date posted'] = pd.to_datetime(df['Date posted'])
+                                    df['Timestamp'] = pd.to_datetime(df['Timestamp'])
+
+                                    print(df['Date posted'].dtype)
+                                    print(df['Date posted'].head(5))
+                                </code>
+                            </pre>
+                            <p>The results above shows the first 5 data of the Date posted column as well as its datatype. </p>
+                        </div>
+
+                        <!--NLP-->
+                        <div>
+                            <h3><b> Natural Language Processing </b></h3>
+                            <p>After the necessary preprocessing, we move on to natural language processing wherein we standardize in a way all the values in the dataset. For example, in this section we want 'Risa' and 'risa' to be the same value as they mean the same but have different formats. We also change the unnecesarry data such as emoticons by removing symbols and emojis by converting them into words. By doing this, we ensure that every piece of data can be processed for our exploration and modeling.</p>
+                            <p>To start with, we import once again the necessary modules for doing these things such as the re, copy, string, and nltk modules. We also download some necessary database so that the process is done more efficiently.</p>
+                            <p>The code below shows the code for doing this process. Note also that we need a working internet for us to download the databases.</p>
+                            
+                            <pre>
+                                <code class="language-python line-numbers">
+                                    import re
+                                    import copy
+                                    import string
+                                    import nltk
+                                    nltk.download('stopwords')
+                                    nltk.download('punkt')
+                                    nltk.download('wordnet')
+                                </code>
+                            </pre>
+                        </div>
+
+                        <!--Removal of emoji and emoticon-->
+                        <div>
+                            <h4><b> Removal of emoji and emoticon </b></h4>
+                            <p>In this section of <b>NLP</b>, we standardize the value of the string data by removing the unnecessary symbols as well as converting the emojis into a text. Note that we usually do this for the 'Account bio' column and the 'Tweets' column but since we dropped the account bio column, we don't have to do this for that data column. In addition, this is not exactly part of our main research question but this data may be useful in the data modeling section of the project so we still process this data.</p>
+                            <p>To do this, we separate the handling of the two process by making functions for each of them. The first function is called <b><i>emoji_to_word</i></b> wherein its function is to return a text version of the emoji being fed to this function. To do this, we first get the database for the emojis (note that there are thousands of emojis and not everything may be in the database) so that we know what text to return for that emoji. We then use this database to change the emojis in the data into workable texts/strings.</p>
+                            <p>We do the same process for handling emoticons wherein emoticons are basically just a combination of symbols instead of being graphical like emojis. We get the database for emoticons then read it and remove these from the data rather than converting it since.</p>
+                            <p>The code below shows how this process is done. The output is also shown below.</p> 
+
+                            <pre>
+                                <code class="language-python line-numbers">
+                                    #handling emojis
+                                    url_emoji = "https://drive.google.com/uc?id=1G1vIkkbqPBYPKHcQ8qy0G2zkoab2Qv4v"
+                                    df_emoji = pd.read_pickle(url_emoji)
+                                    df_emoji = {v: k for k, v in df_emoji.items()}
+
+                                    def emoji_to_word(text):
+                                    for emot in df_emoji:
+                                        text = re.sub(r'('+emot+')', "_".join(df_emoji[emot].replace(",","").replace(":","").split()), text)
+                                    return text
+
+                                    # handling emoticons
+                                    url_emote = "https://drive.google.com/uc?id=1HDpafp97gCl9xZTQWMgP2kKK_NuhENlE"
+                                    df_emote = pd.read_pickle(url_emote)
+
+                                    def emote_to_word(text):
+                                        for emot in df_emote:
+                                            text = re.sub(u'('+emot+')', "_".join(df_emote[emot].replace(",","").split()), text)
+                                            text = text.replace(&lt;"3", "heart" ) # not included in emoticons database
+                                        return text
+
+                                    tweets = copy.deepcopy(df['Tweet'])
+                                    tweets = [emoji_to_word(t) for t in tweets]
+                                    tweets = [emote_to_word(t) for t in tweets]
+
+                                    df_tweet = pd.DataFrame({'Original': df['Tweet'], 'Without Emotes': tweets})
+
+                                    print(df_tweet.head(5))
+                                </code>
+                            </pre>
+                        </div>
+
 
                         <h2 class="section-heading">The Final Frontier</h2>
                         <p>There can be no thought of finishing for ‘aiming for the stars.’ Both figuratively and literally, it is a task to occupy the generations. And no matter how much progress one makes, there is always the thrill of just beginning.</p>
