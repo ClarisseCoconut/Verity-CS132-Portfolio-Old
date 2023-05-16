@@ -69,8 +69,40 @@
                                 import seaborn as sns
                             </code>
                         </pre>
-                        
-                        
+
+                        <p>We first view the data and some of its features such as what columns have null values.</p>
+
+                        <pre>
+                            <code class = "language-python line-numbers">
+                                df = pd.read_csv("Dataset - Group 50 - Data.csv")
+                                df = df.iloc[:105]
+
+                                print(df)
+                                print(df.isnull().sum())
+                            </code>
+                        </pre>
+
+                        <h3><b> Handling missing values / ensuring no missing values </b></h3>
+                        <p> In this section, we first try to find all the null values then deal with them using different methods such as dropping the whole column, imputing the general data, deleting the whole row. </p>
+                        <p>Shown below is the several methods used in dealing with these values. As shown in the last code block, data columns that contained null values are the optional <b>Add columns, Reviewer, Review, Account Bio, Tweet translated, Views, Remarks, Location, and Reasoning</b>. For several columns that are optional and had many null values, the team decided to drop these columns by using the drop function. </p>
+                        <p>This was done the same for columns we had no literal use like the <b>Account bio, Tweet translated, Views, Remarks, Location, and Reasoning</b>.</p>
+                        <p>For columns with little null values and may prove to be useful in the research question being discussed by the team, we imputated values into these data column. One example of this is the Quote tweets data column. Since one of the steps the team ensured is to have clean data regarding this data, null values are actually 0 valued datacells. Thus, we decided to impute the value 0 in the null cells in this column. This is also done for the <b>Replies</b> column. </p>
+                        <p>Note as well that a similar step was done for the <b>Rating</b> column wherein the imputated value is the categorical data "False".</p>
+
+                        <pre>
+                            <code class = "language-python line-numbers">
+                                df = pd.read_csv("Dataset - Group 50 - Data.csv")
+                                df = df.iloc[:105]
+                                df.drop(['Add columns here', 'Add columns here.1', 'Add columns here.2', 'Reviewer', 'Review'], axis = 1, inplace = True)
+                                df.drop(['Account bio', 'Tweet Translated', 'Views', 'Remarks', 'Location', 'Reasoning'], axis = 1, inplace = True)
+                                df['Quote Tweets'].fillna(0, inplace = True)
+                                df['Replies'].fillna(0, inplace = True)
+                                df['Rating'].fillna('FALSE', inplace = True)
+
+                                print(df.isnull().sum())
+                            </code>
+                        </pre>
+
                         <h2 class="section-heading">The Final Frontier</h2>
                         <p>There can be no thought of finishing for ‘aiming for the stars.’ Both figuratively and literally, it is a task to occupy the generations. And no matter how much progress one makes, there is always the thrill of just beginning.</p>
                         <p>There can be no thought of finishing for ‘aiming for the stars.’ Both figuratively and literally, it is a task to occupy the generations. And no matter how much progress one makes, there is always the thrill of just beginning.</p>
