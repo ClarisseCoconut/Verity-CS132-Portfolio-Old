@@ -402,9 +402,6 @@
                         <div>
                             <h3 class="section-heading"><b> Histogram </b></h3>
                             <p> The team used <b><i>seaborn</i></b> to plot the histogram showing the count of tweets during a specific time period. In this case, the time periods are separated yearly.</p>
-                            <p>For this section, we discuss the heatmap plot and its use in helping us understand the data. Heatmaps are commonly used for featuring correlation between two or more variables. In this plot we used the variables <b>Quote Tweets, Replies, Likes,</b> and <b>Followers</b>. The diagonal shows a correlation of 1 since these features the same variable. This is very similar to a matrix but in a more graphical manner. The different color shows how much the two variables being compared are correlated with each other. Note that this isn't necessarily part of answering the team's main question but may prove to be useful for future reference.</p>
-                            <p>Shown below is the code for doing this heatmap as well as the heatmap being discussed. Note that for a black color this means that there is no correlation between the two variables and for a peach color shows a high correlation between them.</p>
-
 
 
                             <pre>
@@ -419,6 +416,8 @@
                             <h3 class="section-heading"><b> Heatmap </b></h3>
                             <p> The team used <b><i>seaborn</i></b> to plot a heatmap to visualize if there is any correlation between the number of followers of an account and the engagement on their mis/disinfo tweet.</p>
                             <p> The team used the following columns in our dataframe: <b><i>Followers, Likes, Replies, Quote Tweets</i></b>. Note that there are positive correlations between the follower count of an account to the likes, replies, and quote tweet; with the <b><i>Likes</i></b> column having the strongest correlation</p>
+                            <p>For this section, we discuss the heatmap plot and its use in helping us understand the data. Heatmaps are commonly used for featuring correlation between two or more variables. In this plot we used the variables <b>Quote Tweets, Replies, Likes,</b> and <b>Followers</b>. The diagonal shows a correlation of 1 since these features the same variable. This is very similar to a matrix but in a more graphical manner. The different color shows how much the two variables being compared are correlated with each other. Note that this isn't necessarily part of answering the team's main question but may prove to be useful for future reference.</p>
+                            <p>Shown below is the code for doing this heatmap as well as the heatmap being discussed. Note that for a black color this means that there is no correlation between the two variables and for a peach color shows a high correlation between them.</p>
 
                             <pre>
                                 <code class = "language-python">
