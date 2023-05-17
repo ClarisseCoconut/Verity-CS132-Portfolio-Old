@@ -328,7 +328,8 @@
                         <!--Time Series Analysis-->
                         <div>
                             <h3><b>Interpolation</b></h3>
-                            <p>temporary explanation</p>
+                            <p>In this section, we do the interpolation part of the <b>Time Series Analysis</b>. Interpolation is a type of estimation in which known values or obtained data are used to know the value of unknown datas and insert this interpolated value into these null data. Here we do 4 different interpolation wherein we found the nearest interpolation, linear interpolation, weighted time interpolation, and probably the most known of all the average per monthly since this is also applicable in our datacolumn the <b>'Date Posted</b> data column. The code for doing these are shown below and we used the function '.interpolate' to have an easier time doing this. In this section, we used the average per month values but we still did the other interpolation so that we have a choice for doing the processes in the future. We used this since this is the simplest method.</p>
+                            <p> Next we move onto the plotting part wherein we visualize the data given using our obtained data and interpolated data.</p>
 
                             <pre>
                                 <code class="language-python">
@@ -368,8 +369,12 @@
                         <!--Plotting-->
                         <div>
                             <h3><b> Plotting </b></h3>
+                            <p>In this section we discuss and show the different plots done by the team to showcase the different attributes, trends, and relationship of the acquired data. This helps us to better understand the data we gathered and explain its characteristics and help us in modeling it.</p>
+                            
+                            <!--Line Plot-->
                             <h3><b> Line Plot </b></h3>
-                            <p>temporary explanation</p>
+                            <p>In this plot we try to answer the trends and patterns on the total counts of tweets containing misinformation/disinformation on a monthly basis among the given year range of 2016 to 2022. This type of plot helps us to understand if tweets increases or decreases significantly in a certain month. Simply put this type of plot shows the change over time of the total counts of tweets.</p>
+                            <p> Shown below is the line plot with obtained value and interpolated value wherein the interpolated value is the average counts of tweets per month. Notice that the x axis are the months with their corresponding year and the y-axis is the total counts of tweets.</p>
 
                             <pre>
                                 <code class = "language-python">
@@ -389,9 +394,15 @@
                             </pre>
                             
                         </div>
+
+                        <!--Histogram-->
                         <div>
                             <h3><b> Histogram </b></h3>
                             <p> The team used <b><i>seaborn</i></b> to plot the histogram showing the count of tweets during a specific time period. In this case, the time periods are separated yearly.</p>
+                            <p>For this section, we discuss the heatmap plot and its use in helping us understand the data. Heatmaps are commonly used for featuring correlation between two or more variables. In this plot we used the variables <b>Quote Tweets, Replies, Likes,</b> and <b>Followers</b>. The diagonal shows a correlation of 1 since these features the same variable. This is very similar to a matrix but in a more graphical manner. The different color shows how much the two variables being compared are correlated with each other. Note that this isn't necessarily part of answering the team's main question but may prove to be useful for future reference.</p>
+                            <p>Shown below is the code for doing this heatmap as well as the heatmap being discussed. Note that for a black color this means that there is no correlation between the two variables and for a peach color shows a high correlation between them.</p>
+
+
 
                             <pre>
                                 <code class = "language-python">
@@ -400,7 +411,7 @@
                             </pre>
                         </div>
 
-
+                        <!--Heatmap-->
                         <div>
                             <h3><b> Heatmap </b></h3>
                             <p> The team used <b><i>seaborn</i></b> to plot a heatmap to visualize if there is any correlation between the number of followers of an account and the engagement on their mis/disinfo tweet.</p>
@@ -419,10 +430,13 @@
                             </pre>
                         </div>
 
+                        <!--Barplot-->
                         <div>
                             <h3><b> Barplot </b></h3>
-                            <p>temporary explanation</p>
+                            <p>This type of graph shows comparison among two or more variables and can be easily understood as it shows how different or similar the obtained data are. In this section we compared the number of followers in the different account types. Note however that we did not include the media account type since the team was only able to obtain 1 (one) media type of account that had a misinformation/disinformation tweet and the team thought that this may be severely inaccurate. This led to the team comparing the number of followers on the two data types only specifically: <b>Anonymous, and Identified</b>. The graph shows that Identified twitter accounts usually have more followers than Anonymous account types.</p>
+                            <p>To do this particular graph, the team used the groupby function as well as the seaborn module. The code is shown below along with the discussed bar graph.</p>
 
+                            
                             <pre>
                                 <code class = "language-python">
                                     df_bar = df[['Followers', 'Account type']].copy()
