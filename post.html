@@ -328,7 +328,7 @@
                         <!--Time Series Analysis-->
                         <div>
                             <h3><b>Interpolation</b></h3>
-                            <p>In this section, we do the interpolation part of the <b>Time Series Analysis</b>. Interpolation is a type of estimation in which known values or obtained data are used to know the value of unknown datas and insert this interpolated value into these null data. Here we do 4 different interpolation wherein we found the nearest interpolation, linear interpolation, weighted time interpolation, and probably the most known of all the average per monthly since this is also applicable in our datacolumn the <b>'Date Posted</b> data column. The code for doing these are shown below and we used the function '.interpolate' to have an easier time doing this. In this section, we used the average per month values but we still did the other interpolation so that we have a choice for doing the processes in the future. We used this since this is the simplest method.</p>
+                            <p>In this section, we do the interpolation part of the <b>Time Series Analysis</b>. Interpolation is a type of estimation in which known values or obtained data are used to know the value of unknown datas and insert this interpolated value into these null data. Here we do 4 different interpolation wherein we found the nearest interpolation, linear interpolation, weighted time interpolation, and probably the most known of all the average per monthly since this is also applicable in our datacolumn the <b>'Date Posted'</b> data column. The code for doing these are shown below and we used the function '.interpolate' to have an easier time doing this. In this section, we used the average per month values but we still did the other interpolation so that we have a choice for doing the processes in the future. We used this since this is the simplest method.</p>
                             <p> Next we move onto the plotting part wherein we visualize the data given using our obtained data and interpolated data.</p>
 
                             <pre>
@@ -363,7 +363,7 @@
                         <div>
                             <h2><b>Data Visualization and Plotting</b></h2>
                             <p>The next step after preprocessing all the data is to visualize its contents using charts, plots, and other visualizing techniques to present the complex data and represent its relationship, trends, and pattern.</p>
-                            <p>Some of the visualization techniques we used are scatterplots to show the distribution, heatmaps to show corelations, bar graphs to show comparison, and line graphs for comparison.</p>
+                            <p>Some of the visualization techniques we used are histogram to show the distribution, heatmaps to show correlations, bar graphs to show comparison, and line graphs for comparison.</p>
                         </div>
 
                         <!--Plotting-->
@@ -436,7 +436,7 @@
                             <p>This type of graph shows comparison among two or more variables and can be easily understood as it shows how different or similar the obtained data are. In this section we compared the number of followers in the different account types. Note however that we did not include the media account type since the team was only able to obtain 1 (one) media type of account that had a misinformation/disinformation tweet and the team thought that this may be severely inaccurate. This led to the team comparing the number of followers on the two data types only specifically: <b>Anonymous, and Identified</b>. The graph shows that Identified twitter accounts usually have more followers than Anonymous account types.</p>
                             <p>To do this particular graph, the team used the groupby function as well as the seaborn module. The code is shown below along with the discussed bar graph.</p>
 
-                            
+
                             <pre>
                                 <code class = "language-python">
                                     df_bar = df[['Followers', 'Account type']].copy()
