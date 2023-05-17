@@ -84,7 +84,7 @@
 
                         <!--Missing Values-->
                         <div>
-                        <h3><b> Handling missing values / ensuring no missing values </b></h3>
+                        <h3 class="section-heading"><b> Handling missing values / ensuring no missing values </b></h3>
                         <p> In this section, we first try to find all the null values then deal with them using different methods such as dropping the whole column, imputing the general data, deleting the whole row. </p>
                         <p>Shown below is the several methods used in dealing with these values. As shown in the last code block, data columns that contained null values are the optional <b>Add columns, Reviewer, Review, Account Bio, Tweet translated, Views, Remarks, Location, and Reasoning</b>. For several columns that are optional and had many null values, the team decided to drop these columns by using the drop function. </p>
                         <p>This was done the same for columns we had no literal use like the <b>Account bio, Tweet translated, Views, Remarks, Location, and Reasoning</b>.</p>
@@ -105,12 +105,14 @@
                             </code>
                         </pre>
 
+                        <a href="#!"><img class="img-fluid" src="assets/img/handling_missing_values.PNG" alt="..." /></a>
+
                         <p> Notice in the results above that when we print out the sum of null values found in the dataset, we get 0 for all the columns. This means that we have dealt with all the null values found in our data set.</p>
                         </div>
 
                         <!--Ensuring formatting Consistency-->
                         <div>
-                            <h3><b> Ensuring formatting consistency</b></h3>
+                            <h3 class="section-heading"><b> Ensuring formatting consistency</b></h3>
                             <p> It's also very important to ensure that formatting consistency is attained. This is important because having an inconsistent format may cause the exploration of the data to have an error or display wrong results. Since the research team ensured that the correct data was inputted in the dataset, the team only ensured that the data type is consistent with its type of data such as the case with the <b><i>Date Posted</i></b> and <b><i>Timestamp</i></b> columns since their values is of timestamp and not strings. Having a wrong datatype may cause the values to be changed accidentally or unwillingly so having a correct datatype is also important in having formatting consistency </p>
                             <p>To do this the team just converted the values of columns <b><i>Date posted</i></b> and <b><i>Timestamp</i></b> into the datetime datatype. The team also used the <b><i>.replace</i></b> method to modify some entries in the <b><i>Rating</i></b> and <b><i>Followers</i></b> column to ensure formatting consistency. Note that these errors in the formatting were found as the team were exploring the data.</p>
 
@@ -131,7 +133,7 @@
 
                         <!--Categorical Encoding-->
                         <div>
-                            <h3><b> Categorical Encoding </b></h3>
+                            <h3 class="section-heading"><b> Categorical Encoding </b></h3>
                             <p>In this section we do categorical encoding where we convert the categorical values into an integer format so that when we feed this data to the machine learning model we're able to give better results and predictions. There are commonly two commonly used categorical encoding methods called the one hot encoding and the integer encoding. One hot encoding is usually done in categorical values without inherent value such as being high or being low while integer encoding is done for categorical values with order such as high, medium, and low.</p>
                             <p>Shown below is the process in doing this process. Notice that the team used one hot encoding for both the two categorical data <b>Rating</b> and <b>Content type</b> since the values of this data column doesn't have and inherent ordering in their values. For the content type, the data had at most 1 type of content type while in the rating there were some data that had 2 or more ratings.</p>
 
@@ -161,7 +163,7 @@
 
                         <!--NLP-->
                         <div>
-                            <h3><b> Natural Language Processing </b></h3>
+                            <h3 class="section-heading"><b> Natural Language Processing </b></h3>
                             <p>After the necessary preprocessing, we move on to natural language processing wherein we standardize in a way all the values in the dataset. For example, in this section we want 'Risa' and 'risa' to be the same value as they mean the same but have different formats. We also change the unnecesarry data such as emoticons by removing symbols and emojis by converting them into words. By doing this, we ensure that every piece of data can be processed for our exploration and modeling.</p>
                             <p>To start with, we import once again the necessary modules for doing these things such as the re, copy, string, and nltk modules. We also download some necessary database so that the process is done more efficiently.</p>
                             <p>The code below shows the code for doing this process. Note also that we need a working internet for us to download the databases.</p>
@@ -183,7 +185,7 @@
 
                         <!--Removal of emoji and emoticon-->
                         <div>
-                            <h4><b> Removal of emoji and emoticon </b></h4>
+                            <h4 class="section-heading"><b> Removal of emoji and emoticon </b></h4>
                             <p>In this section of <b>NLP</b>, we standardize the value of the string data by removing the unnecessary symbols as well as converting the emojis into a text. Note that we usually do this for the 'Account bio' column and the 'Tweets' column but since we dropped the account bio column, we don't have to do this for that data column. In addition, this is not exactly part of our main research question but this data may be useful in the data modeling section of the project so we still process this data.</p>
                             <p>To do this, we separate the handling of the two process by making functions for each of them. The first function is called <b><i>emoji_to_word</i></b> wherein its function is to return a text version of the emoji being fed to this function. To do this, we first get the database for the emojis (note that there are thousands of emojis and not everything may be in the database) so that we know what text to return for that emoji. We then use this database to change the emojis in the data into workable texts/strings.</p>
                             <p>We do the same process for handling emoticons wherein emoticons are basically just a combination of symbols instead of being graphical like emojis. We get the database for emoticons then read it and remove these from the data rather than converting it since.</p>
@@ -226,7 +228,7 @@
 
                         <!--Translating and Lowercasing-->
                         <div>
-                            <h4><b>Translating and Lowercasing</b></h4>
+                            <h4 class="section-heading"><b>Translating and Lowercasing</b></h4>
                             <p>In this section of NLP, since we finished converting all the non-characters into workable texts we focus in making the format the same. As mentioned earlier, 'Risa' and 'risa' should be the same so as to make things easier we convert all the characters into a lowercase format. We also know that there are multilingual data from this column so before converting all of these into a lowercase format, we first translate all of it into english and only then that we converted all of the characters into lowercase.</p>
                             <p>The code below shows this process. Note that we imported a translator so that we can convert the multilingual text into the same language but do note that this is not 100% accurate since there are sometimes contexts in language. The team decided to translate the languages into english since most of the tweets are in english format and filipino format.</p>
                             <p>The output for the first 5 database is also shown below.</p>
@@ -254,7 +256,7 @@
 
                         <!--Tokenization and Stop words removal-->
                         <div>
-                            <h4><b> Tokenization and Stop words removal </b></h4>
+                            <h4 class="section-heading"><b> Tokenization and Stop words removal </b></h4>
                             <p>In this section we remove the commonly used words without any real meaning like 'as', 'like', and 'and' which we call stop words. We also tokenize in this section. Tokenizing means that we get the words either by phrase, by sentence, or by word which is important because this can be used in data modeling such as the use of machine learning. Again, though this data column is not of utmost importance in our key question this may serve useful in future processes like data modeling.</p>
                             <p>To do this, we import the commonly used stopwords and we separate the data into two which are filtered tweets and tokenized tweets. Note that we only did this for the <b><i>Tweets</i></b> data column</p>
                             
@@ -285,6 +287,7 @@
 
                         <!--Stemming and Lemmatization-->
                         <div>
+                            <h3 class="section-heading"><b>Stemming and Lemmatization</b></h3>
                             <p>Stemming and Lemmatization are both text normalization techniques used in preparing words for processings. Stemming refers to chopping the ends of words and removing derivational affixes. Stemming is usually used in producing variants of the word base which helpfully helps in returning the same value. For example, cleaning should also return the value for clean, cleaned, and cleans. Lemmatization on the other hand refers to the vocabulary instead of just using word reduction to analyze the word's meaning.  </p>
                             <p>To do this, we first import the stemmer and lemmatizer we are going to use which in this case is the <b>'Porter Stemmer'</b> and <b>'Wordnet Lemmatizer'.</b> We then create two arrays for both the stemmed tweets and the lemmatized tweets. Afterwards, we do the process of stemming and lemmatizing and append these to the array we initialized. We then create another column for these lemmatized and stemmed tweets.</p>
                             
@@ -327,7 +330,7 @@
 
                         <!--Time Series Analysis-->
                         <div>
-                            <h3><b>Interpolation</b></h3>
+                            <h3 class="section-heading"><b>Interpolation</b></h3>
                             <p>In this section, we do the interpolation part of the <b>Time Series Analysis</b>. Interpolation is a type of estimation in which known values or obtained data are used to know the value of unknown datas and insert this interpolated value into these null data. Here we do 4 different interpolation wherein we found the nearest interpolation, linear interpolation, weighted time interpolation, and probably the most known of all the average per monthly since this is also applicable in our datacolumn the <b>'Date Posted'</b> data column. The code for doing these are shown below and we used the function '.interpolate' to have an easier time doing this. In this section, we used the average per month values but we still did the other interpolation so that we have a choice for doing the processes in the future. We used this since this is the simplest method.</p>
                             <p> Next we move onto the plotting part wherein we visualize the data given using our obtained data and interpolated data.</p>
 
@@ -361,18 +364,18 @@
 
                         <!--Data Visualization and Plotting-->
                         <div>
-                            <h2><b>Data Visualization and Plotting</b></h2>
+                            <h2 class="section-heading"><b>Data Visualization and Plotting</b></h2>
                             <p>The next step after preprocessing all the data is to visualize its contents using charts, plots, and other visualizing techniques to present the complex data and represent its relationship, trends, and pattern.</p>
                             <p>Some of the visualization techniques we used are histogram to show the distribution, heatmaps to show correlations, bar graphs to show comparison, and line graphs for comparison.</p>
                         </div>
 
                         <!--Plotting-->
                         <div>
-                            <h3><b> Plotting </b></h3>
+                            <h3 class="section-heading"><b> Plotting </b></h3>
                             <p>In this section we discuss and show the different plots done by the team to showcase the different attributes, trends, and relationship of the acquired data. This helps us to better understand the data we gathered and explain its characteristics and help us in modeling it.</p>
                             
                             <!--Line Plot-->
-                            <h3><b> Line Plot </b></h3>
+                            <h3 class="section-heading"><b> Line Plot </b></h3>
                             <p>In this plot we try to answer the trends and patterns on the total counts of tweets containing misinformation/disinformation on a monthly basis among the given year range of 2016 to 2022. This type of plot helps us to understand if tweets increases or decreases significantly in a certain month. Simply put this type of plot shows the change over time of the total counts of tweets.</p>
                             <p> Shown below is the line plot with obtained value and interpolated value wherein the interpolated value is the average counts of tweets per month. Notice that the x axis are the months with their corresponding year and the y-axis is the total counts of tweets.</p>
 
@@ -397,7 +400,7 @@
 
                         <!--Histogram-->
                         <div>
-                            <h3><b> Histogram </b></h3>
+                            <h3 class="section-heading"><b> Histogram </b></h3>
                             <p> The team used <b><i>seaborn</i></b> to plot the histogram showing the count of tweets during a specific time period. In this case, the time periods are separated yearly.</p>
                             <p>For this section, we discuss the heatmap plot and its use in helping us understand the data. Heatmaps are commonly used for featuring correlation between two or more variables. In this plot we used the variables <b>Quote Tweets, Replies, Likes,</b> and <b>Followers</b>. The diagonal shows a correlation of 1 since these features the same variable. This is very similar to a matrix but in a more graphical manner. The different color shows how much the two variables being compared are correlated with each other. Note that this isn't necessarily part of answering the team's main question but may prove to be useful for future reference.</p>
                             <p>Shown below is the code for doing this heatmap as well as the heatmap being discussed. Note that for a black color this means that there is no correlation between the two variables and for a peach color shows a high correlation between them.</p>
@@ -413,7 +416,7 @@
 
                         <!--Heatmap-->
                         <div>
-                            <h3><b> Heatmap </b></h3>
+                            <h3 class="section-heading"><b> Heatmap </b></h3>
                             <p> The team used <b><i>seaborn</i></b> to plot a heatmap to visualize if there is any correlation between the number of followers of an account and the engagement on their mis/disinfo tweet.</p>
                             <p> The team used the following columns in our dataframe: <b><i>Followers, Likes, Replies, Quote Tweets</i></b>. Note that there are positive correlations between the follower count of an account to the likes, replies, and quote tweet; with the <b><i>Likes</i></b> column having the strongest correlation</p>
 
@@ -432,7 +435,7 @@
 
                         <!--Barplot-->
                         <div>
-                            <h3><b> Barplot </b></h3>
+                            <h3 class="section-heading"><b> Barplot </b></h3>
                             <p>This type of graph shows comparison among two or more variables and can be easily understood as it shows how different or similar the obtained data are. In this section we compared the number of followers in the different account types. Note however that we did not include the media account type since the team was only able to obtain 1 (one) media type of account that had a misinformation/disinformation tweet and the team thought that this may be severely inaccurate. This led to the team comparing the number of followers on the two data types only specifically: <b>Anonymous, and Identified</b>. The graph shows that Identified twitter accounts usually have more followers than Anonymous account types.</p>
                             <p>To do this particular graph, the team used the groupby function as well as the seaborn module. The code is shown below along with the discussed bar graph.</p>
 
@@ -464,12 +467,7 @@
                         <span class="caption text-muted">To go places and do things that have never been done before – that’s what living is all about.</span>
                         <p>Space, the final frontier. These are the voyages of the Starship Enterprise. Its five-year mission: to explore strange new worlds, to seek out new life and new civilizations, to boldly go where no man has gone before.</p>
                         <p>As I stand out here in the wonders of the unknown at Hadley, I sort of realize there’s a fundamental truth to our nature, Man must explore, and this is exploration at its greatest.</p>
-                        <p>
-                            Placeholder text by
-                            <a href="http://spaceipsum.com/">Space Ipsum</a>
-                            &middot; Images by
-                            <a href="https://www.flickr.com/photos/nasacommons/">NASA on The Commons</a>
-                        </p>
+            
                     </div>
                 </div>
             </div>
