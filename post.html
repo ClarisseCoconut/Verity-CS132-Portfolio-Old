@@ -368,12 +368,75 @@
                         <!--Plotting-->
                         <div>
                             <h3><b> Plotting </b></h3>
+                            <h3><b> Line Plot </b></h3>
+                            <p>temporary explanation</p>
+
+                            <pre>
+                                <code class = "language-python">
+                                    years = mdates.YearLocator()
+                                    months = mdates.MonthLocator()
+                                    years_fmt = mdates.DateFormatter('%Y-%m')
+
+                                    fig, axes = plt.subplots(figsize=(18,10))
+                                    sns.lineplot(data=count_monthly['count_average'], label = 'count_monthly', marker = 'o')
+                                    axes.xaxis.set_major_locator(months)
+                                    axes.xaxis.set_major_formatter(years_fmt)
+                                    axes.xaxis.set_minor_locator(months)
+
+                                    plt.xticks(rotation = 'vertical')
+                                    plt.show()
+                                </code>
+                            </pre>
                             
+                        </div>
+                        <div>
+                            <h3><b> Histogram </b></h3>
+                            <p> The team used <b><i>seaborn</i></b> to plot the histogram showing the count of tweets during a specific time period. In this case, the time periods are separated yearly.</p>
+
+                            <pre>
+                                <code class = "language-python">
+                                    sns.histplot(df['Date posted'].dropna(), kde=True, color ='red')
+                                </code>
+                            </pre>
                         </div>
 
 
+                        <div>
+                            <h3><b> Heatmap </b></h3>
+                            <p> The team used <b><i>seaborn</i></b> to plot a heatmap to visualize if there is any correlation between the number of followers of an account and the engagement on their mis/disinfo tweet.</p>
+                            <p> The team used the following columns in our dataframe: <b><i>Followers, Likes, Replies, Quote Tweets</i></b>. Note that there are positive correlations between the follower count of an account to the likes, replies, and quote tweet; with the <b><i>Likes</i></b> column having the strongest correlation</p>
 
-                        
+                            <pre>
+                                <code class = "language-python">
+                                    df_heatmap = df[['Followers', 'Likes', 'Replies', 'Quote Tweets']].copy()
+
+                                    for i, row in df_heatmap.iterrows():
+                                        df_heatmap.at[i, 'Followers'] = row.Followers.replace(',','')
+                                    df_heatmap['Followers'] = df_heatmap['Followers'].astype('int')
+
+                                    sns.heatmap(df_heatmap.corr())
+                                </code>
+                            </pre>
+                        </div>
+
+                        <div>
+                            <h3><b> Barplot </b></h3>
+                            <p>temporary explanation</p>
+
+                            <pre>
+                                <code class = "language-python">
+                                    df_bar = df[['Followers', 'Account type']].copy()
+                                    for i, row in df_bar.iterrows():
+                                        df_bar.at[i, 'Followers'] = row.Followers.replace(',','')
+                                    df_bar['Followers'] = df_bar['Followers'].astype('int')
+
+
+                                    df_bar = df_bar.groupby('Account type', as_index=False)['Followers'].mean()
+
+                                    sns.barplot(x =df_bar['Account type'][0:2] , y = df_bar['Followers'][0:2])
+                                </code>
+                            </pre>
+                        </div>
 
 
                         <h2 class="section-heading">The Final Frontier</h2>
